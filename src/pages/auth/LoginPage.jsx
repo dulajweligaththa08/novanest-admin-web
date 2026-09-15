@@ -23,7 +23,9 @@ export default function LoginPage() {
     setError('')
     try {
       await login(email, password)
-      navigate(from, { replace: true })
+      // Small timeout ensures React state update has propagated
+      // before the protected route checks isAuthenticated
+      setTimeout(() => navigate(from, { replace: true }), 50)
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Login failed. Please try again.')
     }
