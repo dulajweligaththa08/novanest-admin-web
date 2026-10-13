@@ -5,8 +5,11 @@ import Sidebar from './Sidebar'
 
 const titles = {
   '/':           'Dashboard',
-  '/projects':   'Projects',
-  '/apartments': 'Apartments',
+  '/projects':   'Apartment Projects',
+  '/apartments': 'Apartment Units',
+  '/houses':     'House Listings',
+  '/land':       'Land Listings',
+  '/listings':   'Properties',
   '/customers':  'Customers',
   '/inquiries':  'Inquiries',
   '/news':       'News & Insights',

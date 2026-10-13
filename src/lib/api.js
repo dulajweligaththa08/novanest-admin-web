@@ -1,11 +1,14 @@
 import axios from 'axios'
 
-// In production (Netlify), use the deployed backend URL via env variable.
-// In development, Vite proxies /api → localhost:5000 so we use /api.
-const baseURL = import.meta.env.VITE_API_URL || '/api'
+// In production VITE_API_URL is set to the Railway backend URL,
+// e.g. https://novanest-backend.up.railway.app
+// In development Vite proxies /api → localhost:5000 so no env var is needed.
+const BASE = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api'
 
 const api = axios.create({
-  baseURL,
+  baseURL: BASE,
   headers: { 'Content-Type': 'application/json' },
 })
 

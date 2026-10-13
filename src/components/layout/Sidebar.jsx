@@ -1,18 +1,20 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, Building2, Home, Users, MessageSquare,
-  Newspaper, Briefcase, LogOut, ChevronRight, Bell,
+  Newspaper, Briefcase, LogOut, ChevronRight, MapPin, Download,
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 
 const nav = [
-  { to: '/',           label: 'Dashboard',  icon: LayoutDashboard },
-  { to: '/projects',   label: 'Projects',   icon: Building2 },
-  { to: '/apartments', label: 'Apartments', icon: Home },
-  { to: '/customers',  label: 'Customers',  icon: Users },
-  { to: '/inquiries',  label: 'Inquiries',  icon: MessageSquare },
-  { to: '/news',       label: 'News',       icon: Newspaper },
-  { to: '/careers',    label: 'Careers',    icon: Briefcase },
+  { to: '/',          label: 'Dashboard',   icon: LayoutDashboard },
+  { to: '/projects',  label: 'Apartment',   icon: Building2 },
+  { to: '/houses',    label: 'House',       icon: Home },
+  { to: '/land',      label: 'Land',        icon: MapPin },
+  { to: '/customers', label: 'Customers',   icon: Users },
+  { to: '/inquiries',          label: 'Inquiries',          icon: MessageSquare },
+  { to: '/brochure-downloads', label: 'Brochure Downloads', icon: Download },
+  { to: '/news',               label: 'News',               icon: Newspaper },
+  { to: '/careers',            label: 'Careers',            icon: Briefcase },
 ]
 
 export default function Sidebar({ onClose }) {

@@ -41,11 +41,11 @@ export default function ApartmentsPage() {
   return (
     <div>
       <PageHeader
-        title="Apartments"
-        subtitle="Manage all apartment units"
+        title="Properties"
+        subtitle="Manage all property listings"
         action={
           <button className="btn-primary" onClick={() => { setEditing(null); setShowForm(true) }}>
-            <Plus className="w-4 h-4" /> New Apartment
+            <Plus className="w-4 h-4" /> New Property
           </button>
         }
       />
@@ -54,19 +54,20 @@ export default function ApartmentsPage() {
         <div className="card p-8 text-center text-gray-400">Loading...</div>
       ) : !data?.length ? (
         <div className="card">
-          <EmptyState icon={Home} title="No apartments yet"
-            description="Add apartments to floors via the Projects page, or create one here."
-            action={<button className="btn-primary" onClick={() => setShowForm(true)}><Plus className="w-4 h-4" /> New Apartment</button>}
+          <EmptyState icon={Home} title="No properties yet"
+            description="Add properties to floors via the Projects page, or create one here."
+            action={<button className="btn-primary" onClick={() => setShowForm(true)}><Plus className="w-4 h-4" /> New Property</button>}
           />
         </div>
       ) : (
         <Table>
           <Thead>
-            <Th>Unit</Th>
-            <Th>Project / Floor</Th>
+            <Th>Listing</Th>
             <Th>Type</Th>
+            <Th>Project / Floor</Th>
+            <Th>Category</Th>
             <Th>Beds / Baths</Th>
-            <Th>Area</Th>
+            <Th>Area / Land</Th>
             <Th>Price</Th>
             <Th>Status</Th>
             <Th></Th>
@@ -74,16 +75,32 @@ export default function ApartmentsPage() {
           <Tbody>
             {data.map((apt) => {
               const project = apt.floor?.building?.project
+              const isLand  = apt.propertyType === 'LAND'
               return (
                 <Tr key={apt.id}>
                   <Td className="font-medium text-gray-900">{apt.unitNumber}</Td>
+                  <Td>
+                    <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium
+                      ${apt.propertyType === 'APARTMENT' ? 'bg-blue-100 text-blue-700'
+                      : apt.propertyType === 'HOUSE'     ? 'bg-emerald-100 text-emerald-700'
+                      :                                    'bg-amber-100 text-amber-700'}`}>
+                      {apt.propertyType}
+                    </span>
+                  </Td>
                   <Td>
                     <p className="text-sm text-gray-700">{project?.name}</p>
                     <p className="text-xs text-gray-400">Floor {apt.floor?.floorNumber}</p>
                   </Td>
                   <Td className="text-gray-600">{apt.apartmentType?.name || '—'}</Td>
-                  <Td className="text-gray-600">{apt.bedrooms}BR / {apt.bathrooms}BA</Td>
-                  <Td className="text-gray-600">{apt.areaSqft ? `${Number(apt.areaSqft).toLocaleString()} sqft` : '—'}</Td>
+                  <Td className="text-gray-600">
+                    {isLand ? '—' : `${apt.bedrooms}BR / ${apt.bathrooms}BA`}
+                  </Td>
+                  <Td className="text-gray-600">
+                    {isLand
+                      ? apt.landAreaPerches ? `${apt.landAreaPerches} perches` : '—'
+                      : apt.areaSqft ? `${Number(apt.areaSqft).toLocaleString()} sqft` : '—'
+                    }
+                  </Td>
                   <Td className="text-gray-600">
                     {apt.price ? `LKR ${Number(apt.price).toLocaleString()}` : '—'}
                   </Td>
@@ -109,7 +126,7 @@ export default function ApartmentsPage() {
       )}
 
       {showForm && (
-        <Modal title={editing ? 'Edit Apartment' : 'New Apartment'} onClose={() => setShowForm(false)} size="lg">
+        <Modal title={editing ? 'Edit Property' : 'New Property'} onClose={() => setShowForm(false)} size="lg">
           <ApartmentForm
             initial={editing}
             types={types || []}
